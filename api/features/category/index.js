@@ -1,5 +1,5 @@
 import express from "express";
-import {cluster} from "../couchbase";
+import {cluster} from "../../couchbase";
 const router = express.Router();
 
 /**
