@@ -1,16 +1,8 @@
-const express = require("express");
-const cors = require("cors");
-const helmet = require("helmet");
-const compression = require("compression");
+import app from "./app";
 
-
-const app = express();
-app.use(compression());
-app.use(helmet());
-app.use(cors());
-
-
-// Start server
-app.listen(process.env.PORT || 3002, () => {
-  console.log(`Server listening`)
-})
+/**
+ * Server Activation
+ */
+app.listen(3000, () =>
+  console.log("REST API server ready at: http://localhost:3000"),
+);
