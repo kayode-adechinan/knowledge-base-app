@@ -1,56 +1,36 @@
 <template>
-  <div>
-    <section
-      class="max-w-7xl py-8  space-y-3 mx-auto bg-white border shadow-sm"
-    >
-      <div class="mx-14">
-        <span>ICON-SEARCHIE</span>
-        <div>
-          <h1>Nom de la catégorie</h1>
-          <span>12 articles dans cette catégorie</span>
-        </div>
-      </div>
+  <section id="search-page">
+    <Breadcumb />
 
-      <div class="space-y-3">
-        <!-- <div
+    <div class="md:max-w-[1000px] md:mx-auto mx-4 ">
+      <div class="bg-white border shadow-sm space-y-3 p-8">
+        <h1 class="text-3xl font-bold antialiased">Categories</h1>
+
+        <NuxtLink
+          :to="{ name: 'categories-id', params: { id: category.id } }"
           :key="index"
           v-for="(category, index) of categories"
-          class="space-y-2 py-3  flex flex-col justify-center mx-14 bg-blue-400"
+          class="space-y-2 p-8  flex flex-col justify-center  bg-[#f1f7f9]"
         >
-          <h1>{{ category.categoryName }}</h1>
-          <span
-            >{{ category.totalOfArticle }} articles dans cette catégorie</span
-          >
-        </div> -->
+          <h1 class="text-2xl font-bold">{{ category.title }}</h1>
+        </NuxtLink>
 
-        <div>
-          <h1>categories</h1>
+        <h1 class="text-3xl font-bold antialiased">Articles</h1>
 
-          <NuxtLink
-            :to="{ name: 'categories-id', params: { id: category.id } }"
-            :key="index"
-            v-for="(category, index) of categories"
-            class="space-y-2 py-3  flex flex-col justify-center mx-14 bg-blue-400"
-          >
-            <h1>{{ category.title }}</h1>
-          </NuxtLink>
-        </div>
-
-        <div>
-          <h1>articles</h1>
-
-          <NuxtLink
-            :to="{ name: 'articles-id', params: { id: article.id } }"
-            :key="index"
-            v-for="(article, index) of articles"
-            class="space-y-2 py-3  flex flex-col justify-center mx-14 bg-blue-400"
-          >
-            <h1>{{ article.title }}</h1>
-          </NuxtLink>
-        </div>
+        <NuxtLink
+          :to="{ name: 'articles-id', params: { id: article.id } }"
+          :key="index"
+          v-for="(article, index) of articles"
+          class="space-y-2 p-8  flex flex-col justify-center  bg-[#f1f7f9]"
+        >
+          <h1 class="text-2xl font-bold">{{ article.title }}</h1>
+          <p class="text-gray-400">
+            {{ article.body }}
+          </p>
+        </NuxtLink>
       </div>
-    </section>
-  </div>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -70,9 +50,7 @@ export default {
   async asyncData({ query, $http }) {
     const searchTerm = query.searchTerm;
 
-    const request = await $http.$get(
-      `http://localhost:3002/api/v1/search?searchTerm=${searchTerm}`
-    );
+    const request = await $http.$get(`/search?searchTerm=${searchTerm}`);
 
     const categories = request.categories;
     const articles = request.articles;
@@ -88,29 +66,24 @@ export default {
     // async makeSearch(e) {
     //   console.log("from search");
     //   this.$router.push({ path: "/search", query: { searchTerm: e } });
-
     //   const request = await this.$http.$get(
     //     `http://localhost:3002/api/v1/search?searchTerm=${e}`
     //   );
-
     //   this.categories = request.categories;
     //   this.articles = request.articles;k
-
     //   // console.log(e);
     //   // const res = await this.$http.$get("http://localhost:3002/api/v1/search?searchTerm=joke");
     //   // console.log(res.articles);
     //   // console.log(res.categories)
-
     //   //   const res = await this.$http.$get(
     //   //     `http://localhost:3002/api/v1/search?searchTerm=${e}`
     //   //   );
-
     //   // this.$router.push({ path: 'search', query: { plan: 'private' } })
     // }
   },
 
   watch: {
-   async $route(to, from) {
+    async $route(to, from) {
       console.log(to);
       const request = await this.$http.$get(
         `http://localhost:3002/api/v1/search?searchTerm=${to.query.searchTerm}`

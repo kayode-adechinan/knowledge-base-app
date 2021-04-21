@@ -2,7 +2,6 @@
   <div class="bg-[#f1f7f9] w-full min-h-screen">
     <Header />
     <SearchBox @search-listerner="makeSearch" />
-    <Breadcumb />
 
     <Nuxt />
   </div>
@@ -12,12 +11,20 @@
 import searchMixins from "@/mixins";
 
 export default {
-  mixins: [searchMixins]
+  mixins: [searchMixins],
+
+  filters: {
+    capitalize: function(value) {
+      if (!value) return "";
+      value = value.toString();
+      return value.charAt(0).toUpperCase() + value.slice(1);
+    }
+  }
 };
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 *,
 *::before,
 *::after {

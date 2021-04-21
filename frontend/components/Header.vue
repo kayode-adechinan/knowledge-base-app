@@ -1,6 +1,6 @@
 <template>
   <section
-    class="w-full h-16 flex flex-row items-center px-28 bg-[#0083b9] text-white"
+    class="w-full h-16 flex flex-row items-center md:px-36 bg-[#0083b9] text-white"
   >
     <NuxtLink to="/">
       <img src="/logo.png" alt="" srcset="" />

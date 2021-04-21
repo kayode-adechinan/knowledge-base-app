@@ -1,7 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: "frontend",
+    title: "Knowledge Base",
     htmlAttrs: {
       lang: "en"
     },
@@ -10,14 +10,18 @@ export default {
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { hid: "description", name: "description", content: "" }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
+    link: [{ rel: "icon", type: "image/png", href: "/favicon.png" }]
+  },
+
+  env: {
+    apiUrl: process.env.API_URL || "http://localhost:3001/api/v1"
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: ["~/plugins/filters"],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -40,9 +44,17 @@ export default {
     "@nuxt/http"
   ],
 
+  http: {
+    baseURL: process.env.apiUrl // Can be also an object with default options
+  },
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {}
+  build: {},
+
+  server: {
+    host: "0.0.0.0" // default: localhost
+  }
 };

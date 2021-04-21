@@ -8,6 +8,7 @@ export default {
       this.$router.push({ path: "/search", query: { searchTerm: e } });
     }
   }
+
   // watch: {
   //   $route(to, from) {
   //     console.log(to);

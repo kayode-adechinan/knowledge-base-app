@@ -1,31 +1,54 @@
 <template>
-  <div>
-    <div>
-      <h1>{{ this.id }}</h1>
-      <h1>{{ this.currentCategory.id }}</h1>
-      <h1>{{ this.currentCategory.title }}</h1>
-      <h1>Articles</h1>
+  <section id="category-detail-page">
+    <Breadcumb />
+    <div class="md:max-w-[1000px] md:mx-auto mx-4 ">
+      <div class="text-center" v-if="articles.length === 0">
+        <Loader />
+      </div>
 
-      <NuxtLink
-        :to="{ name: 'articles-id', params: { id: article.id } }"
-        :key="index"
-        v-for="(article, index) of articles"
-        class="space-y-2 py-3  flex flex-col justify-center mx-14 bg-blue-400"
-      >
-        <h1>{{ article.title }}</h1>
-        <span>
-          {{ article.body }}
-        </span>
-      </NuxtLink>
+      <div v-else class=" bg-white border shadow-sm space-y-3 p-8">
+        <!-- <h1>{{ this.id }}</h1> -->
+        <!-- <h1 class="text-2xl font-bold">{{ this.currentCategory.id }}</h1> -->
+        <!-- <h1 class="text-2xl font-bold">{{ this.currentCategory.title }}</h1> -->
+        <!-- <h1>Articles</h1> -->
+
+        <div class="space-x-6 p-10  flex flex-row items-center   bg-white ">
+          <img
+            src="https://img.icons8.com/dusk/50/000000/knowledge-sharing.png"
+          />
+
+          <div class="flex flex-col justify-center space-y-2">
+            <h1 class="text-2xl font-bold">
+              {{ this.currentCategory.categoryName | capitalize }}
+            </h1>
+            <span class="text-gray-400"
+              >{{ this.currentCategory.totalOfArticle }} articles dans cette
+              catégorie</span
+            >
+          </div>
+        </div>
+
+        <NuxtLink
+          :to="{ name: 'articles-id', params: { id: article.id } }"
+          :key="index"
+          v-for="(article, index) of articles"
+          class="space-y-2 p-8  flex flex-col justify-center  bg-[#f1f7f9]"
+        >
+          <h1 class="text-2xl font-bold">{{ article.title | capitalize }}</h1>
+          <span class="text-gray-400">
+            {{ article.body | capitalize }}
+          </span>
+        </NuxtLink>
+      </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
 import searchMixins from "@/mixins";
 
 export default {
- // mixins: [searchMixins],
+  // mixins: [searchMixins],
 
   data() {
     return {
@@ -37,13 +60,9 @@ export default {
   async asyncData({ params, $http }) {
     const id = params.id;
 
-    const currentCategory = await $http.$get(
-      `http://localhost:3002/api/v1/categories/${id}`
-    );
+    const currentCategory = await $http.$get(`/categories/${id}`);
 
-    const getArticles = await $http.$get(
-      `http://localhost:3002/api/v1/articles?categoryId=${id}`
-    );
+    const getArticles = await $http.$get(`/articles?categoryId=${id}`);
 
     const articles = getArticles.rows;
 
