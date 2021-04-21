@@ -1,8 +1,6 @@
 const express = require("express");
 const db = require("../../couchbase");
 
-
-
 const router = express.Router();
 
 /**
@@ -11,7 +9,7 @@ const router = express.Router();
  */
 
 router.get("/search", async (req, res) => {
-  let {searchTerm, page = 1} = req.query;
+  let {searchTerm} = req.query;
 
   // http://localhost:3000/api/v1/search?searchTerm=joke
 

@@ -4,15 +4,18 @@ const seed = async () => {
   const categories = [
     {
       id: "1",
-      title: "joke",
+      icon: "/icon.png",
+      title: "Questions sur l'utilisation d'Affixe",
     },
     {
       id: "2",
-      title: "quote",
+      icon: "/icon2.png",
+      title: "Bon à savoir sur Affixe",
     },
     {
       id: "3",
-      title: "thought",
+      icon: "/icon3.png",
+      title: "Généralités / Autres / Divers / Vrac",
     },
   ];
 
