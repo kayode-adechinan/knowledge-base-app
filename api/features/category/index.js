@@ -1,5 +1,5 @@
-import express from "express";
-import {cluster} from "../../couchbase";
+const express = require("express");
+const db = require("../../couchbase");
 const router = express.Router();
 
 /**
@@ -9,7 +9,7 @@ const router = express.Router();
 // fetch categories with total of articles
 router.get("/categories", async (req, res) => {
   let getCategoryQuery = `SELECT id,title FROM  demo._default.categories  WHERE title != "";`;
-  const getCategoryQueryResult = await cluster.query(getCategoryQuery);
+  const getCategoryQueryResult = await db.cluster.query(getCategoryQuery);
 
   const categories = [];
 
@@ -17,7 +17,7 @@ router.get("/categories", async (req, res) => {
     const category = getCategoryQueryResult.rows[i];
 
     let getCategoryArticlesQuery = `
-        SELECT a.title, a.body
+        SELECT a.id, a.title, a.body
         FROM demo._default.articles a
         WHERE a.id
                 IN (SELECT RAW article_id
@@ -25,11 +25,12 @@ router.get("/categories", async (req, res) => {
                           WHERE category_id = "${category.id}");
     `;
 
-    let getCategoryArticlesQueryResult = await cluster.query(
+    let getCategoryArticlesQueryResult = await db.cluster.query(
       getCategoryArticlesQuery,
     );
 
     categories.push({
+      categoryId: category.id,
       categoryName: category.title,
       totalOfArticle: getCategoryArticlesQueryResult.rows.length,
     });
@@ -44,10 +45,10 @@ router.get("/categories", async (req, res) => {
 router.get("/categories/:id", async (req, res) => {
   const {id} = req.params;
   let getCategoryDetailQuery = `SELECT * FROM  demo._default.categories  WHERE id = "${id}" LIMIT 1;`;
-  const getCategoryDetailQueryResult = await cluster.query(
+  const getCategoryDetailQueryResult = await db.cluster.query(
     getCategoryDetailQuery,
   );
   res.json(getCategoryDetailQueryResult.rows[0].categories);
 });
 
-export default router;
+module.exports = router;

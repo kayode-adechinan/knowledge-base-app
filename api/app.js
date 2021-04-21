@@ -9,9 +9,10 @@ const compression = require("compression");
 /**
  *  Routers import
  */
-import category from "./features/category";
-import article from "./features/article";
-import search from "./features/search";
+const category = require("./features/category");
+const article = require("./features/article");
+const search = require("./features/search");
+
 
 /**
  *  App Instanciation
@@ -47,4 +48,5 @@ app.use("/api/v1", search);
 /**
  *  App Export
  */
-export default app;
+
+module.exports = app;

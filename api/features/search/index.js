@@ -1,5 +1,8 @@
-import express from "express";
-import {cluster} from "../../couchbase";
+const express = require("express");
+const db = require("../../couchbase");
+
+
+
 const router = express.Router();
 
 /**
@@ -12,12 +15,12 @@ router.get("/search", async (req, res) => {
 
   // http://localhost:3000/api/v1/search?searchTerm=joke
 
-  let getArticlesQuery = `SELECT title,body FROM  demo._default.articles
+  let getArticlesQuery = `SELECT id,title,body FROM  demo._default.articles
                                   WHERE title LIKE "${searchTerm}%" OR body LIKE "${searchTerm}%";`;
-  let getCategoryQuery = `SELECT title FROM  demo._default.categories
+  let getCategoryQuery = `SELECT id,title FROM  demo._default.categories
                                   WHERE title LIKE "${searchTerm}%";`;
-  const getArticlesQueryResult = await cluster.query(getArticlesQuery);
-  const getCategoryQueryResult = await cluster.query(getCategoryQuery);
+  const getArticlesQueryResult = await db.cluster.query(getArticlesQuery);
+  const getCategoryQueryResult = await db.cluster.query(getCategoryQuery);
 
   res.json({
     articles: getArticlesQueryResult.rows,
@@ -25,4 +28,4 @@ router.get("/search", async (req, res) => {
   });
 });
 
-export default router;
+module.exports = router;

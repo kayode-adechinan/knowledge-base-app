@@ -1,11 +1,17 @@
+require("dotenv").config();
+
+const db = {};
+
 const couchbase = require("couchbase");
-export const cluster = new couchbase.Cluster("couchbase://localhost:8091", {
-  username: "couchbase",
-  password: "couchbase",
+db.cluster = new couchbase.Cluster("couchbase://localhost:8091", {
+  username: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
 });
 
 // get a reference to our bucket
-export const bucket = cluster.bucket("demo");
+db.bucket = db.cluster.bucket(process.env.DB_BUCKET);
 
 // get a reference to the default collection
-export const collection = bucket.defaultCollection();
+//export const collection = bucket.defaultCollection();
+
+module.exports = db;
