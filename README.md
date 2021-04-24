@@ -56,7 +56,7 @@ $ npm install
 
 ## Setting up cluster
 
-[how to setup cluster](https://res.cloudinary.com/dkc7uggjy/video/upload/v1619233398/quadra/setup-cluster.mp4)
+[How to setup cluster : click here](https://res.cloudinary.com/dkc7uggjy/video/upload/v1619233398/quadra/setup-cluster.mp4)
 
 ## Database seeding
 
