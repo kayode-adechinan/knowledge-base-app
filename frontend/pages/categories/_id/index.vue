@@ -7,15 +7,8 @@
       </div>
 
       <div v-else class=" bg-white border shadow-sm space-y-3 p-8">
-        <!-- <h1>{{ this.id }}</h1> -->
-        <!-- <h1 class="text-2xl font-bold">{{ this.currentCategory.id }}</h1> -->
-        <!-- <h1 class="text-2xl font-bold">{{ this.currentCategory.title }}</h1> -->
-        <!-- <h1>Articles</h1> -->
-
         <div class="space-x-6 p-10  flex flex-row items-center   bg-white ">
-          <img
-            src="https://img.icons8.com/dusk/50/000000/knowledge-sharing.png"
-          />
+          <img :src="this.currentCategory.categoryIcon" />
 
           <div class="flex flex-col justify-center space-y-2">
             <h1 class="text-2xl font-bold">
@@ -36,7 +29,7 @@
         >
           <h1 class="text-2xl font-bold">{{ article.title | capitalize }}</h1>
           <span class="text-gray-400">
-            {{ article.body | capitalize }}
+            Mis à jour le {{article.updated_at}}
           </span>
         </NuxtLink>
       </div>
@@ -45,11 +38,7 @@
 </template>
 
 <script>
-import searchMixins from "@/mixins";
-
 export default {
-  // mixins: [searchMixins],
-
   data() {
     return {
       currentCategory: {},
@@ -68,27 +57,7 @@ export default {
 
     return { id, currentCategory, articles };
   }
-
-  // methods: {
-  //   makeSearch(e) {
-  //     console.log(e);
-  //   }
-  // }
-
-  // async fetch() {
-  //   let getCurrentCategoryRequestResponse = await fetch(
-  //     `http://localhost:3002/api/v1/categories/${this.id}`
-  //   ).then(res => res.json());
-
-  //   this.currentCategory = getCurrentCategoryRequestResponse;
-  // }
 };
 </script>
 
-<style>
-/* Sample `apply` at-rules with Tailwind CSS
-.container {
-@apply min-h-screen flex justify-center items-center text-center mx-auto;
-}
-*/
-</style>
+<style></style>

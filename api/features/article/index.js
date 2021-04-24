@@ -8,16 +8,16 @@ const router = express.Router();
 
 // fetch articles by categories
 router.get("/articles", async (req, res) => {
-  //http://localhost:3000/api/v1/articles?categoryId=3
+  //api/v1/articles?categoryId=3
   let {categoryId, page = 1} = req.query;
 
   let getArticleQuery = `
 
-  SELECT a.id, a.title, a.body
-  FROM demo._default.articles a
+  SELECT a.id, a.title, a.body,a.updated_at
+  FROM faqdb._default.articles a
   WHERE a.id
           IN (SELECT RAW article_id
-                    FROM demo._default.categories_to_articles
+                    FROM faqdb._default.categories_to_articles
                     WHERE category_id = "${categoryId}");
   `;
 
@@ -27,8 +27,9 @@ router.get("/articles", async (req, res) => {
 
 // fetch article detail
 router.get("/articles/:id", async (req, res) => {
+  //api/v1/articles/1
   const {id} = req.params;
-  let getArticleQuery = `SELECT id,title,body FROM  demo._default.articles  WHERE id = "${id}" LIMIT 1;`;
+  let getArticleQuery = `SELECT id,title,body FROM  faqdb._default.articles  WHERE id = "${id}" LIMIT 1;`;
   const getArticleQueryResult = await db.cluster.query(getArticleQuery);
   res.json(getArticleQueryResult.rows[0]);
 });

@@ -9,14 +9,13 @@ const router = express.Router();
  */
 
 router.get("/search", async (req, res) => {
+  //search?searchTerm=bon
   let {searchTerm} = req.query;
 
-  // http://localhost:3000/api/v1/search?searchTerm=joke
-
-  let getArticlesQuery = `SELECT id,title,body FROM  demo._default.articles
-                                  WHERE title LIKE "${searchTerm}%" OR body LIKE "${searchTerm}%";`;
-  let getCategoryQuery = `SELECT id,title FROM  demo._default.categories
-                                  WHERE title LIKE "${searchTerm}%";`;
+  let getArticlesQuery = `SELECT id,title,body FROM  faqdb._default.articles
+                                  WHERE  lower(title) LIKE "%${searchTerm.toLocaleLowerCase()}%" OR lower(body) LIKE "%${searchTerm.toLocaleLowerCase()}%";`;
+  let getCategoryQuery = `SELECT id,title FROM  faqdb._default.categories
+                                  WHERE lower(title) LIKE "%${searchTerm.toLocaleLowerCase()}%";`;
   const getArticlesQueryResult = await db.cluster.query(getArticlesQuery);
   const getCategoryQueryResult = await db.cluster.query(getCategoryQuery);
 

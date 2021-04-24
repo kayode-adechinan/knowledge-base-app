@@ -1,8 +1,6 @@
-const sum = require("../modules/sum");
-
 const app = require("../app");
 
-app.listen(3002);
+app.listen(process.env.TESTING_PORT);
 
 const supertest = require("supertest");
 const request = supertest(app);

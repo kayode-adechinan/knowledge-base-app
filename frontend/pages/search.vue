@@ -24,9 +24,7 @@
           class="space-y-2 p-8  flex flex-col justify-center  bg-[#f1f7f9]"
         >
           <h1 class="text-2xl font-bold">{{ article.title }}</h1>
-          <p class="text-gray-400">
-            {{ article.body }}
-          </p>
+          <div class="text-gray-400 line-clamp-3" v-html="article.body"></div>
         </NuxtLink>
       </div>
     </div>
@@ -34,11 +32,7 @@
 </template>
 
 <script>
-import searchMixins from "../mixins";
-
 export default {
-  //mixins: [searchMixins],
-
   data() {
     return {
       categories: [],
@@ -58,30 +52,6 @@ export default {
     return { searchTerm, categories, articles };
   },
 
-  mounted() {
-    console.log("searchterm is" + this.searchTerm);
-  },
-
-  methods: {
-    // async makeSearch(e) {
-    //   console.log("from search");
-    //   this.$router.push({ path: "/search", query: { searchTerm: e } });
-    //   const request = await this.$http.$get(
-    //     `http://localhost:3002/api/v1/search?searchTerm=${e}`
-    //   );
-    //   this.categories = request.categories;
-    //   this.articles = request.articles;k
-    //   // console.log(e);
-    //   // const res = await this.$http.$get("http://localhost:3002/api/v1/search?searchTerm=joke");
-    //   // console.log(res.articles);
-    //   // console.log(res.categories)
-    //   //   const res = await this.$http.$get(
-    //   //     `http://localhost:3002/api/v1/search?searchTerm=${e}`
-    //   //   );
-    //   // this.$router.push({ path: 'search', query: { plan: 'private' } })
-    // }
-  },
-
   watch: {
     async $route(to, from) {
       console.log(to);
@@ -96,10 +66,4 @@ export default {
 };
 </script>
 
-<style>
-/* Sample `apply` at-rules with Tailwind CSS
-.container {
-@apply min-h-screen flex justify-center items-center text-center mx-auto;
-}
-*/
-</style>
+<style></style>

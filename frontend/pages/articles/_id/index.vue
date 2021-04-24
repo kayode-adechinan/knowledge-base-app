@@ -8,38 +8,11 @@
       </div>
 
       <div v-else class="bg-white border shadow-sm space-y-3 md:p-14 p-4">
-        <!-- <h1>{{ this.id }}</h1>
-        <h1>{{ this.currentArticle.id }}</h1> -->
         <h1 class="text-3xl font-bold">
           {{ this.currentArticle.title | capitalize }}
         </h1>
         <div class="text-gray-400 text-justify">
-          {{ this.currentArticle.body | capitalize }}
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae
-          nisi animi nulla natus in quaerat atque sit, exercitationem impedit
-          totam magnam nam! Adipisci tempora aliquid sed corporis amet dolor
-          laborum? Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Recusandae nisi animi nulla natus in quaerat atque sit, exercitationem
-          impedit totam magnam nam! Adipisci tempora aliquid sed corporis amet
-          dolor laborum? Lorem ipsum dolor sit amet consectetur adipisicing
-          elit. Recusandae nisi animi nulla natus in quaerat atque sit,
-          exercitationem impedit totam magnam nam! Adipisci tempora aliquid sed
-          corporis amet dolor laborum? Lorem ipsum dolor sit amet consectetur
-          adipisicing elit. Recusandae nisi animi nulla natus in quaerat atque
-          sit, exercitationem impedit totam magnam nam! Adipisci tempora aliquid
-          sed corporis amet dolor laborum? Lorem ipsum dolor sit amet
-          consectetur adipisicing elit. Recusandae nisi animi nulla natus in
-          quaerat atque sit, exercitationem impedit totam magnam nam! Adipisci
-          tempora aliquid sed corporis amet dolor laborum? Lorem ipsum dolor sit
-          amet consectetur adipisicing elit. Recusandae nisi animi nulla natus
-          in quaerat atque sit, exercitationem impedit totam magnam nam!
-          Adipisci tempora aliquid sed corporis amet dolor laborum? Lorem ipsum
-          dolor sit amet consectetur adipisicing elit. Recusandae nisi animi
-          nulla natus in quaerat atque sit, exercitationem impedit totam magnam
-          nam! Adipisci tempora aliquid sed corporis amet dolor laborum? Lorem
-          ipsum dolor sit amet consectetur adipisicing elit. Recusandae nisi
-          animi nulla natus in quaerat atque sit, exercitationem impedit totam
-          magnam nam! Adipisci tempora aliquid sed corporis amet dolor laborum?
+          <div v-html="this.currentArticle.body"></div>
 
           <img
             class="md:h-36 my-8 w-full object-cover object-center"
@@ -81,11 +54,7 @@
 </template>
 
 <script>
-import searchMixins from "@/mixins";
-
 export default {
-  //mixins: [searchMixins],
-
   data() {
     return {
       currentArticle: {}
@@ -99,19 +68,7 @@ export default {
 
     return { id, currentArticle };
   }
-
-  // methods: {
-  //   makeSearch(e) {
-  //     console.log(e);
-  //   }
-  // }
 };
 </script>
 
-<style>
-/* Sample `apply` at-rules with Tailwind CSS
-.container {
-@apply min-h-screen flex justify-center items-center text-center mx-auto;
-}
-*/
-</style>
+<style></style>

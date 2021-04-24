@@ -10,10 +10,10 @@ const router = express.Router();
 const getCategoryArticlesQuery = async id => {
   let getCategoryArticlesQuery = `
         SELECT a.id, a.title, a.body
-        FROM demo._default.articles a
+        FROM faqdb._default.articles a
         WHERE a.id
                 IN (SELECT RAW article_id
-                          FROM demo._default.categories_to_articles
+                          FROM faqdb._default.categories_to_articles
                           WHERE category_id = "${id}");
     `;
 
@@ -22,26 +22,14 @@ const getCategoryArticlesQuery = async id => {
 
 // fetch categories with total of articles
 router.get("/categories", async (req, res) => {
-  let getCategoryQuery = `SELECT id,title FROM  demo._default.categories  WHERE title != "";`;
+  //api/v1/categories
+  let getCategoryQuery = `SELECT id,title,icon FROM  faqdb._default.categories  WHERE title != "";`;
   const getCategoryQueryResult = await db.cluster.query(getCategoryQuery);
 
   const categories = [];
 
   for (let i = 0; i < getCategoryQueryResult.rows.length; i++) {
     const category = getCategoryQueryResult.rows[i];
-
-    // let getCategoryArticlesQuery = `
-    //     SELECT a.id, a.title, a.body
-    //     FROM demo._default.articles a
-    //     WHERE a.id
-    //             IN (SELECT RAW article_id
-    //                       FROM demo._default.categories_to_articles
-    //                       WHERE category_id = "${category.id}");
-    // `;
-
-    // let getCategoryArticlesQueryResult = await db.cluster.query(
-    //   getCategoryArticlesQuery,
-    // );
 
     let getCategoryArticlesQueryResult = await getCategoryArticlesQuery(
       category.id,
@@ -50,6 +38,7 @@ router.get("/categories", async (req, res) => {
     categories.push({
       categoryId: category.id,
       categoryName: category.title,
+      categoryIcon: category.icon,
       totalOfArticle: getCategoryArticlesQueryResult.rows.length,
     });
   }
@@ -61,24 +50,12 @@ router.get("/categories", async (req, res) => {
 
 // category detail
 router.get("/categories/:id", async (req, res) => {
+  //api/v1/categories/1
   const {id} = req.params;
-  let getCategoryDetailQuery = `SELECT * FROM  demo._default.categories  WHERE id = "${id}" LIMIT 1;`;
+  let getCategoryDetailQuery = `SELECT * FROM  faqdb._default.categories  WHERE id = "${id}" LIMIT 1;`;
   const getCategoryDetailQueryResult = await db.cluster.query(
     getCategoryDetailQuery,
   );
-
-  // let getCategoryArticlesQuery = `
-  //       SELECT a.id, a.title, a.body
-  //       FROM demo._default.articles a
-  //       WHERE a.id
-  //               IN (SELECT RAW article_id
-  //                         FROM demo._default.categories_to_articles
-  //                         WHERE category_id = "${id}");
-  //   `;
-
-  // let getCategoryArticlesQueryResult = await db.cluster.query(
-  //   getCategoryArticlesQuery,
-  // );
 
   let getCategoryArticlesQueryResult = await getCategoryArticlesQuery(id);
 
@@ -86,9 +63,9 @@ router.get("/categories/:id", async (req, res) => {
 
   cleanedResponse.categoryName =
     getCategoryDetailQueryResult.rows[0].categories.title;
+  cleanedResponse.categoryIcon =
+    getCategoryDetailQueryResult.rows[0].categories.icon;
   cleanedResponse.totalOfArticle = getCategoryArticlesQueryResult.rows.length;
-
-  //res.json(getCategoryDetailQueryResult.rows[0].categories);
 
   res.json(cleanedResponse);
 });
